@@ -1,4 +1,4 @@
-# Quick and dirty pipeline for Froward simulations.
+# Quick and dirty pipeline for Forward simulations.
 
 # Purpose:
 
