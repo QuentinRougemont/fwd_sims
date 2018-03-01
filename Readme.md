@@ -40,6 +40,16 @@ unzip *.zip
 
 ```
 
+## Running a model:
+
+1. pick a model in 00_scripts/models/*sh.
+2. edit the model if necessary
+3. set the number of forward simulation in `./00_scripts/01.launch_slim.sh`
+4. runs as follows:
+```bash
+./00_scripts/01.launch_slim.sh model"$id" 
+```
+
 ## References:
 
 Haller, B.C., & Messer, P.W. (2017). SLiM 2: Flexible, interactive forward genetic simulations. Molecular Biology and Evolution 34(1), 230–240. [DOI](http://dx.doi.org/10.1093/molbev/msw211)
