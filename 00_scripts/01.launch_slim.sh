@@ -1,7 +1,7 @@
 #!/bin/bash
 
-ITERATION=100
-model=$1 #"model6"
+ITERATION=100 #number of time slim will be run for a given model
+model=$1 #model name
 
 if [ -z "$ITERATION" ]
 then
@@ -14,6 +14,13 @@ if [ -z "$model" ]
 then
     echo "error! please provide model name"
     exit    
+fi
+
+LOG_DIR="10_log_files"
+if [[ ! -d "$LOG_DIR" ]]
+then
+    echo "creating log folder" 
+    mkdir 10-log_files
 fi
 
 #prepare indivduals list
