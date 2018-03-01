@@ -13,6 +13,8 @@ simple pipeline to perform forward simulation and test for admixture between pop
 
 **Plink** software available [here](https://www.cog-genomics.org/plink2)
 
+
+**vcftools** software available [here](https://github.com/vcftools/vcftools.git)
 To create your own scenario make sure to read the Slim doc
 
 ## software installation
@@ -37,6 +39,13 @@ wget https://www.cog-genomics.org/static/bin/plink180221/plink_linux_x86_64.zip
 unzip *.zip
 
 #then add path to bashrc or cp to bin
+
+cd ../
+git clone https://github.com/vcftools/vcftools.git
+./autogen.sh
+./configure --prefix=/path/to/vcftools/
+make
+make install
 
 ```
 

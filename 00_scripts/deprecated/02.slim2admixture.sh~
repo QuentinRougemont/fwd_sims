@@ -2,7 +2,7 @@
 
 model="model1" #$1
 mkdir 02_vcf/"$model"
-mkdir 04_results/"$model"
+mkdir 03_matrices/"$model"
 NUMBER=__IDX__
 # launch slim file
   toEval="cat 00_scripts/models/script_slim_template."$model".sh | \
@@ -34,5 +34,5 @@ cd ../../
 #prepare matrix
 paste 01_info_file/individuals.list.txt \
     <(cut -f 1 02_vcf/"$model"/test.slim."$NUMBER".impute.3.Q) \
-    >04_results/"$model"/matrix.admixture."$NUMBER".txt
+    >03_matrices/"$model"/matrix.admixture."$NUMBER".txt
 exit
