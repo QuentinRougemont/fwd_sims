@@ -30,8 +30,8 @@ p1.setMigrationRates(p2,0.001);
 p2.setMigrationRates(p1,0.0005);
 }
 12685  {
-p1.setMigrationRates(p3, 0.000001);
-p2.setMigrationRates(p3, 0.000002);
+p1.setMigrationRates(p3, 0.0015);
+p2.setMigrationRates(p3, 0.00225);
 }
 
 // extract the appropriate number of samples by pop and output vcf file
@@ -39,4 +39,4 @@ p2.setMigrationRates(p3, 0.000002);
 pop1=sample(p1.individuals,224,F);
 pop2=sample(p2.individuals,56,F);
 pop3=sample(p3.individuals,100,F);
-combined=c(pop2,pop1,pop3); combined.genomes.outputVCF(filePath="02_vcf/model1/slim.__NB__.vcf",outputMultiallelics=F);}
+combined=c(pop2,pop1,pop3); combined.genomes.outputVCF(filePath="02_vcf/model9/slim.__NB__.vcf",outputMultiallelics=F);}
