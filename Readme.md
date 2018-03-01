@@ -1,9 +1,12 @@
-# Quick and dirty pipeline for Froward sims
+# Quick and dirty pipeline for Froward simulations.
 
-## Purpose
+
+## Purpose:
+
 simple pipeline to perform forward simulation and test for admixture between population
 
-## Dependencies
+## Dependencies:
+
 **Slim** [forward simulator](https://messerlab.org/slim/)
 
 **Admixture** software avaible [here](https://www.genetics.ucla.edu/software/admixture/)
@@ -37,3 +40,7 @@ unzip *.zip
 #then add path to bashrc or cp to bin
 
 ```
+
+## References:
+
+Haller, B.C., & Messer, P.W. (2017). SLiM 2: Flexible, interactive forward genetic simulations. Molecular Biology and Evolution 34(1), 230–240. [DOI](http://dx.doi.org/10.1093/molbev/msw211)
