@@ -1,40 +1,39 @@
 # Quick and dirty pipeline for Froward sims
 
 ## Purpose
-
 simple pipeline to perform forward simulation and test for admixture between population
 
-## Dependncies
+## Dependencies
+**Slim** [forward simulator](https://messerlab.org/slim/)
 
-Slim [forward simulator](https://messerlab.org/slim/)
+**Admixture** software avaible [here](https://www.genetics.ucla.edu/software/admixture/)
 
-Admixture software avaible [here](https://www.genetics.ucla.edu/software/admixture/)
-#or :
 
-Plink software available [here](https://www.cog-genomics.org/plink2)
+**Plink** software available [here](https://www.cog-genomics.org/plink2)
 
 To create your own scenario make sure to read the Slim doc
 
 ## software installation
 
 ```bash
+wget http://benhaller.com/slim/SLiM.zip
 unzip SLiM.zip
 cd SLiM
 make
-then add path to bashrc
+#then add path to bashrc or cp to bin
 cd ../
 
 wget https://www.genetics.ucla.edu/software/admixture/binaries/admixture_linux-1.3.0.tar.gz
 
 tar -xvf admixture*.tar.gz
 
-#then add to your bin/
+#then add path to bashrc or cp to bin/
 mkdir plink ;cd plink
 
 wget https://www.cog-genomics.org/static/bin/plink180221/plink_linux_x86_64.zip
 
 unzip *.zip
 
-#then add path to bashrc
+#then add path to bashrc or cp to bin
 
 ```
