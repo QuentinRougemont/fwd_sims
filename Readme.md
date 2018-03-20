@@ -17,6 +17,9 @@ simple pipeline to perform forward simulation and test for admixture between pop
 **vcftools** software available [here](https://github.com/vcftools/vcftools.git)
 To create your own scenario make sure to read the Slim doc
 
+**R** software eventually with LEA R package available from [bioconductor](https://www.bioconductor.org/packages/3.7/bioc/html/LEA.html)
+see also script `00_scripts/rscript/01.structure.lea.R` for fast installation.
+
 ## software installation
 
 ```bash
