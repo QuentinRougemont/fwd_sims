@@ -1,7 +1,7 @@
 #!/bin/bash
 
-ITERATION=100 #number of time slim will be run for a given model
-model=$1 #model name
+ITERATION=2
+model=$1 #"model6"
 
 if [ -z "$ITERATION" ]
 then
@@ -16,21 +16,23 @@ then
     exit    
 fi
 
-LOG_DIR="10_log_files"
-if [[ ! -d "$LOG_DIR" ]]
-then
-    echo "creating log folder" 
-    mkdir 10-log_files
-fi
-
 #prepare indivduals list
 awk '{print $1}' 01_info_file/strata.txt \
     >01_info_file/individuals.list.txt
 
+#prepare pop list:
+mkdir 01_info_file/pop 2>/dev/null
+cut -f 2 01_info_file/strata.txt | \
+	sort |uniq > 01_info_file/list_pop
+for i in $(cat 01_info_file/list_pop) ; 
+do
+    grep "$i"  01_info_file/strata.txt > 01_info_file/pop/"$i" 
+done 
+
 #launch loop
 for i in $(eval echo "{1..$ITERATION}")
 do
-    toEval="cat 00_scripts/colosse/02.slim2admixture.general.sh  | \
+    toEval="cat 02.slim2admixture.general.sh  | \
         sed 's/__IDX__/$i/g' | \
         sed 's/__mod__/$model/g'"
     eval $toEval  > TOTAL_"$model"_"$i".sh
@@ -40,5 +42,7 @@ done
 for i in $(ls TOTAL*sh)
 do
 chmod +x $i
-msub "$i"
+"./$i"
 done
+
+#mv TOTAL*sh SLIM*sh *err *out 10_log_files/ 
