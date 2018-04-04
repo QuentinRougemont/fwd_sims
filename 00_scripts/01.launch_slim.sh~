@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ITERATION=100
+ITERATION=5
 model=$1 #"model6"
 
 if [ -z "$ITERATION" ]
@@ -20,29 +20,19 @@ fi
 awk '{print $1}' 01_info_file/strata.txt \
     >01_info_file/individuals.list.txt
 
-#prepare pop list:
-mkdir 01_info_file/pop 2>/dev/null
-cut -f 2 01_info_file/strata.txt | \
-	sort |uniq > 01_info_file/list_pop
-for i in $(cat 01_info_file/list_pop) ; 
-do
-    grep "$i"  01_info_file/strata.txt > 01_info_file/pop/"$i" 
-done 
-
 #launch loop
 for i in $(eval echo "{1..$ITERATION}")
 do
-    toEval="cat 00_scripts/02.slim2admixture.general.sh  | \
+    toEval="cat 00_scripts/colosse/02.slim2admixture."$model".sh  | \
         sed 's/__IDX__/$i/g' | \
         sed 's/__mod__/$model/g'"
-    eval $toEval  > TOTAL_"$model"_"$i".sh
+    echo "$toEval"
+    eval $toEval  > TOTAL_"$i".sh
 done
 #launch scripts
 #exit
 for i in $(ls TOTAL*sh)
 do
 chmod +x $i
-msub "$i"
+./"$i"
 done
-
-#mv TOTAL*sh SLIM*sh *err *out 10_log_files/ 

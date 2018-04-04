@@ -1,13 +1,13 @@
 #!/bin/bash
-##PBS -A ihv-653-aa
-##PBS -N slim2.__mod__.__IDX__
-##PBS -o slim2.__mod__.__IDX__.out
-##PBS -e slim2.__mod__.__IDX__.err
-##PBS -l walltime=02:10:00
+#PBS -A ihv-653-aa
+#PBS -N slim2.__mod__.__IDX__
+#PBS -o slim2.__mod__.__IDX__.out
+#PBS -e slim2.__mod__.__IDX__.err
+#PBS -l walltime=02:10:00
 ##PBS -M YOUREMAIL
-####PBS -m ea
-##PBS -l nodes=1:ppn=8
-##PBS -r n
+###PBS -m ea
+#PBS -l nodes=1:ppn=8
+#PBS -r n
 
 # Move to job submission directory
 #cd $PBS_O_WORKDIR
@@ -51,9 +51,7 @@ plink --file "$inputvcf".impute \
 
 admixture "$inputvcf".impute.bed 3
 input="$inputvcf"
-
-#####################################################################
-# launch SNMF from LEA R package
+#
 Rscript 00_scripts/rscript/01.structure.lea_"$model"_"$NUMBER".R "$inputvcf"
   toEval="cat ../../00_scripts/rscript/01.structure.lea.R | \
       sed 's/__NB__/$NUMBER/g' | \
@@ -140,7 +138,3 @@ Rscript ../../00_scripts/rscript/compute_admixture_mean.R matrix.admixture."$NUM
 cd ../../
 mv 03_results/"$model"/matrix.admixture*.mean.txt 04_summaries/"$model"/  
 #mv TOTAL*sh SLIM*sh *err *out 10_log_files/ 
-
-####################################################################
-#TO DO: DO SOME CLEAN UP HERE
-p
