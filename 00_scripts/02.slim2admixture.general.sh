@@ -1,28 +1,13 @@
 #!/bin/bash
-#PBS -A ihv-653-aa
-#PBS -N slim2.__mod__.__IDX__
-#PBS -o slim2.__mod__.__IDX__.out
-#PBS -e slim2.__mod__.__IDX__.err
-#PBS -l walltime=02:10:00
-##PBS -M YOUREMAIL
-###PBS -m ea
-#PBS -l nodes=1:ppn=8
-#PBS -r n
-
-# Move to job submission directory
-#cd $PBS_O_WORKDIR
 
 #load vcftools
-#source /clumeq/bin/enable_cc_cvmfs
-#module load vcftools
-#module load r/3.4.0
 #module load compilers/gcc/5.4
 #Global Env
 NUMBER=__IDX__
 model=__mod__
-mkdir 02_vcf/"$model"
-mkdir 03_results/"$model"
-mkdir 04_summaries/"$model"
+mkdir -p 02_vcf/"$model" #2>/dev/null
+mkdir -p 03_results/"$model" #2>/dev/null
+mkdir -p 04_summaries/"$model" #2>/dev/null
 # launch slim file
   toEval="cat 00_scripts/models/script_slim_template."$model".sh | \
       sed 's/__NB__/$NUMBER/g' | \
@@ -36,7 +21,10 @@ slim SLIM_"$model"_"$NUMBER".sh
 ####################################################################
 # launch admixture
 cd 02_vcf/"$model"
-
+#source /clumeq/bin/enable_cc_cvmfs
+#module load vcftools
+#module load r/3.4.0
+#
 inputvcf="$(echo slim."$NUMBER".vcf|sed 's/.vcf//g')"
 
 plink --vcf "$inputvcf".vcf \
@@ -52,13 +40,13 @@ plink --file "$inputvcf".impute \
 admixture "$inputvcf".impute.bed 3
 input="$inputvcf"
 #
-Rscript 00_scripts/rscript/01.structure.lea_"$model"_"$NUMBER".R "$inputvcf"
-  toEval="cat ../../00_scripts/rscript/01.structure.lea.R | \
-      sed 's/__NB__/$NUMBER/g' | \
-      sed 's/__mode__/$model/g'"
-      eval $toEval >../../00_scripts/rscript/01.structure.lea_"$model"_"$NUMBER".R
+#Rscript 00_scripts/rscript/01.structure.lea_"$model"_"$NUMBER".R "$inputvcf"
+#€  toEval="cat ../../00_scripts/rscript/01.structure.lea.R | \
+#      sed 's/__NB__/$NUMBER/g' | \
+#      sed 's/__mode__/$model/g'"
+#      eval $toEval >../../00_scripts/rscript/01.structure.lea_"$model"_"$NUMBER".R
 
-Rscript ../../00_scripts/rscript/01.structure.lea_"$model"_"$NUMBER".R "$inputvcf".vcf
+#Rscript ../../00_scripts/rscript/01.structure.lea_"$model"_"$NUMBER".R "$inputvcf".vcf
 
 ####################################################################
 #compute fst  and heterozygosity
@@ -74,7 +62,7 @@ pop3b=$(( $pop1 + $pop2 + $pop3 ))
 source /clumeq/bin/enable_cc_cvmfs
 module load vcftools
 module load r/3.4.0
-module load compilers/gcc/5.4
+#module load compilers/gcc/5.4
 #
 grep "POS" "$inputvcf".vcf | \
     perl -pe 's/\t/\n/g' | \
@@ -89,7 +77,7 @@ grep "POS" "$inputvcf".vcf | \
     perl -pe 's/\t/\n/g' | \
     sed 1,9d | \
     sed -n "$pop3a","$pop3b"p > pop3
-
+#exit
 outfolder="vcffst"
 mkdir "$outfolder"
 for i in $(ls pop* ) ; 
@@ -101,16 +89,17 @@ do
                 vcftools --vcf "$inputvcf".vcf \
                     --weir-fst-pop "$i" \
                     --weir-fst-pop "$j" \
-                    --out "$outfolder"/fst_"$inputvcf"_"$i"_vs_"$j" 
-		    sed '1d' "$outfolder"/fst_"$inputvcf"_"$i"_vs_"$j".weir.fst \
-			cut -f 3 |grep -v "na" | \
+                    --out "$outfolder"/fst_"$inputvcf"_"$i"_vs_"$j"
+		    #echo -e " 
+		    cut -f 3 "$outfolder"/fst_"$inputvcf"_"$i"_vs_"$j".weir.fst |\
+			sed '1d' |grep -v "na" | \
 			awk '{ sum += $1; n++ } END { if (n > 0) print sum / n; }' > \
 			../../04_summaries/"$model"/mean."$inputvcf"_"$i"_vs_"$j".fst ; 
             fi
         fi
     done ; 
 done
-
+#exit
 het="vcfhet"
 mkdir "$het"
 vcftools --vcf "$inputvcf".vcf --het --out "$het"/het_"$inputvcf" 

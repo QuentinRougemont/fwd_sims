@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ITERATION=100
+ITERATION=50
 model=$1 #"model6"
 
 if [ -z "$ITERATION" ]
@@ -39,10 +39,10 @@ do
 done
 #launch scripts
 #exit
-for i in $(ls TOTAL*sh)
+for i in $(ls TOTAL_model*.sh)
 do
 chmod +x $i
-msub "$i"
+"./$i"
 done
 
 #mv TOTAL*sh SLIM*sh *err *out 10_log_files/ 
