@@ -14,7 +14,7 @@ cd $PBS_O_WORKDIR
 
 
 #01.launch_slim.sh
-for i in $(cat list_model2);
+for i in $(cat list_model);
 do
 	./00_scripts/01.launch_slim.sh model$i
 done
