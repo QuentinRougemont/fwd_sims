@@ -15,7 +15,7 @@ initialize() {
 1 {
 	sim.addSubpop("p1", 2000);
 }
-10000 {
+80000 {
     sim.addSubpopSplit("p2", 800, p1); 
     sim.addSubpopSplit("p3", 800, p1);
     p1.setSubpopulationSize(800);
@@ -25,18 +25,18 @@ initialize() {
 // P3 = Stock
 
 // add migration rate
-10001 {
+80001 {
 p1.setMigrationRates(p2,0.001);
 p2.setMigrationRates(p1,0.0005);
 }
-12685  {
-p1.setMigrationRates(p3, 0.1);
-p2.setMigrationRates(p3, 0.2);
+82685 {
+p1.setMigrationRates(p3, 0.025);
+p2.setMigrationRates(p3, 0.0375);
 }
 
 // extract the appropriate number of samples by pop and output vcf file
-12700 late() {allIndividuals = sim.subpopulations.individuals;
+82700 late() {allIndividuals = sim.subpopulations.individuals;
 pop1=sample(p1.individuals,224,F);
 pop2=sample(p2.individuals,56,F);
 pop3=sample(p3.individuals,100,F);
-combined=c(pop2,pop1,pop3); combined.genomes.outputVCF(filePath="02_vcf/model5/test.slim.__NB__.vcf",outputMultiallelics=F);}
+combined=c(pop2,pop1,pop3); combined.genomes.outputVCF(filePath="02_vcf/__mode__/slim.__NB__.vcf",outputMultiallelics=F);}

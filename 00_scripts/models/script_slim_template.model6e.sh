@@ -15,7 +15,15 @@ initialize() {
 1 {
 	sim.addSubpop("p1", 2000);
 }
-10000 {
+
+late() {
+    // initially, everybody lives
+    sim.subpopulations.individuals.tag = 1;
+
+    // here be dragons
+    sample(sim.subpopulations.individuals, 100).tag = 0;
+}
+80000 {
     sim.addSubpopSplit("p2", 800, p1); 
     sim.addSubpopSplit("p3", 800, p1);
     p1.setSubpopulationSize(800);
@@ -25,18 +33,24 @@ initialize() {
 // P3 = Stock
 
 // add migration rate
-10001 {
+80001 {
 p1.setMigrationRates(p2,0.001);
 p2.setMigrationRates(p1,0.0005);
 }
-12685  {
-p1.setMigrationRates(p3, 0.0015);
-p2.setMigrationRates(p3, 0.0030);
+82685 {
+p1.setMigrationRates(p3, 0.1);
+p2.setMigrationRates(p3, 0.15);
 }
-
+12685:82700 fitness(m1, p3) {
+    // ind die
+    if (individual.tag == 1)
+        return 1.0;
+    else
+        return 0.01;
+}
 // extract the appropriate number of samples by pop and output vcf file
-12700 late() {allIndividuals = sim.subpopulations.individuals;
+82700 late() {allIndividuals = sim.subpopulations.individuals;
 pop1=sample(p1.individuals,224,F);
 pop2=sample(p2.individuals,56,F);
 pop3=sample(p3.individuals,100,F);
-combined=c(pop2,pop1,pop3); combined.genomes.outputVCF(filePath="02_vcf/model5/test.slim.__NB__.vcf",outputMultiallelics=F);}
+combined=c(pop2,pop1,pop3); combined.genomes.outputVCF(filePath="02_vcf/__mode__/slim.__NB__.vcf",outputMultiallelics=F);}
