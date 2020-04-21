@@ -20,13 +20,15 @@ To create your own scenario make sure to read the Slim doc
 **R** software eventually with LEA R package available from [bioconductor](https://www.bioconductor.org/packages/3.7/bioc/html/LEA.html)
 see also script `00_scripts/rscript/01.structure.lea.R` for fast installation.
 
-## software installation
+## software installation for LINUX USERS:
 
 ```bash
 wget http://benhaller.com/slim/SLiM.zip
 unzip SLiM.zip
-cd SLiM
-make
+mkdir build
+cd build
+cmake ../SLiM
+make slim
 #then add path to bashrc or cp to bin
 cd ../
 
