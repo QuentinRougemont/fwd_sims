@@ -1,0 +1,23 @@
+#!/bin/bash
+#SBATCH -J "bpass_pods"
+#SBATCH -o log_%j
+#SBATCH -c 08
+#SBATCH -p large
+#SBATCH --mail-type=FAIL
+#SBATCH --mail-user=YOUREMAIL
+#SBATCH --time=21-00:00
+#SBATCH --mem=03G
+
+cd $SLURM_SUBMIT_DIR             
+
+model=$1 #basename of the model example: model.A. 
+if [ -z "$model" ]
+then
+    echo "Error: need model name (eg: model.A)"
+    echo "this corresponds to the name of the slim model we want to run"
+    echo "models are stored in folder `00_scripts/models/` "
+    exit
+fi
+
+
+./00_scripts/01.launch_slim.sh $model 
