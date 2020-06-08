@@ -6,25 +6,28 @@
 NUMBER=__IDX__
 model=__mod__
 maf=__MAF__
+mkdir -p 02_vcf/"$model".maf"$maf"  #2>/dev/null
+mkdir -p 03_results/"$model".maf"$maf" #2>/dev/null 
+mkdir -p 04_summaries/"$model".maf"$maf" #2>/dev/null        
+#mkdir -p 03_results/"$model" #2>/dev/null
+#mkdir -p 04_summaries/"$model" #2>/dev/null
 
-mkdir -p 02_vcf/"$model" #2>/dev/null
-mkdir -p 03_results/"$model" #2>/dev/null
-mkdir -p 04_summaries/"$model" #2>/dev/null
 # launch slim file
   toEval="cat 00_scripts/models/script_slim_template."$model".sh | \
       sed 's/__NB__/$NUMBER/g' | \
-      sed 's/__mode__/$model/g'"
+      sed 's/__mode__/$model/g' | \
+      sed 's/__MAAF__/$maf/g' "
       eval $toEval >SLIM_"$model"_"$NUMBER".sh
 
 #recover MINOR allele frequency :
-maf=$1
+echo $maf
 ####################################################################
 # launch slim
 slim SLIM_"$model"_"$NUMBER".sh
 
 ####################################################################
 # launch admixture
-cd 02_vcf/"$model"
+cd 02_vcf/"$model".maf"$maf"
 inputvcf="$(echo slim."$NUMBER".vcf|sed 's/.vcf//g')"
 
 #comment these line if unwanted
@@ -65,15 +68,17 @@ cat $info/pop2 |awk '{print $1}' >pop2
 cat $info/pop3 |awk '{print $1}' >pop3
 cat $info/pop4 |awk '{print $1}' >pop4
 
-if [ ! -z "$maf" ] 
+#filter vcf if necessary
+if [ ! -z "$maf" ]
 then
     echo "a MAF filtering will be perform"
     echo "MAF value will be $maf "
     vcftools --vcf "$inputvcf".vcf --maf $maf \
-        --out "$inputvcf" --recode 
+        --out $inputvcf --recode 
     mv "$inputvcf".recode.vcf "$inputvcf".vcf
 fi
 
+#then compute summary statistics
 outfolder="vcffst"
 mkdir "$outfolder"
 for i in $(ls pop* ) ; 
@@ -112,16 +117,16 @@ Rscript ../../../00_scripts/rscript/compute_mean_het.R het_"$inputvcf"
 
 cd ../../../
 
-mv 02_vcf/"$model"/"$het"/*mean_het 04_summaries/"$model"/
+mv 02_vcf/"$model".maf"$maf"/"$het"/*mean_het 04_summaries/"$model".maf"$maf"/
 
 #reshpae mean Fst over replicate for R analysis:
 cd 04_summaries
 
-for i in "$model"/*fst ; 
+for i in "$model".maf"$maf"/*fst ; 
 do
     sed "s#^#$i\t#g" $i |\
     sed 's/\//\t/g' |\
-    sed 's/mean.slim./rep/' >> "$model".fst ;
+    sed 's/mean.slim./rep/' >> "$model".maf"$maf".fst ;
 done
 
 ####################################################################
