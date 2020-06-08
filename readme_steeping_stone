@@ -7,3 +7,5 @@ very simplistic stepping stone models made of 4 populations.
 *model.B: 4pop models where each pop are connect by same rate of migration (m = 0.01); each pop have a size of 10,000 individuals and will be maintained for 50K generations.
 *model.C: same as A but reduced migration rate between pop2 and pop3 due to a barrier to gene-flow for instance this can be a river or a montain separating two pop. or a change in oceanic current
 *model.D: same as B but reduced migration rate between pop2 and pop3 due to a barrier to gene-flow for instance this can be a river or a montain separating two pop. or a change in oceanic current
+
+as always models are stored here `00_scripts/models/script_slim_template.model*sh`
