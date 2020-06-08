@@ -12,15 +12,21 @@ initialize() {
     initializeRecombinationRate(2e-07);
 }
 
-// create a population of 10 000 individuals // rescaled by 20 //time are all rescale by 20
+// create a population of 50 000 individuals // rescaled by 20 //time are all rescale by 20
 1 {
     subpopCount = 4;
     for (i in 1:subpopCount)
-       sim.addSubpop(i, 500);
-    for (i in 2:subpopCount)
-       sim.subpopulations[i-1].setMigrationRates(i-1, 0.01);
-    for (i in 1:(subpopCount-1))
-        sim.subpopulations[i-1].setMigrationRates(i+1, 0.01);
+       sim.addSubpop(i, 2500);
+    p1.setMigrationRates(p2, 0.01);
+    p2.setMigrationRates(p1, 0.01);
+    p2.setMigrationRates(p3, 0.001);
+    p3.setMigrationRates(p2, 0.001);
+    p3.setMigrationRates(p4, 0.01);
+    p4.setMigrationRates(p3, 0.01);       
+    //for (i in 2:subpopCount)
+    //   sim.subpopulations[i-1].setMigrationRates(i-1, 0.1);
+    //for (i in 1:(subpopCount-1))
+    //    sim.subpopulations[i-1].setMigrationRates(i+1, 0.1);
 }
 // extract the appropriate number of samples by pop and output vcf file
 //we let the pop evolved for 50 000 generation again rescaled by 20

@@ -12,11 +12,11 @@ initialize() {
     initializeRecombinationRate(2e-07);
 }
 
-// create a population of 10 000 individuals // rescaled by 20 //time are all rescale by 20
+// create a population of 50 000 individuals // rescaled by 20 //time are all rescale by 20
 1 {
     subpopCount = 4;
     for (i in 1:subpopCount)
-       sim.addSubpop(i, 500);
+       sim.addSubpop(i, 2500);
     for (i in 2:subpopCount)
        sim.subpopulations[i-1].setMigrationRates(i-1, 0.01);
     for (i in 1:(subpopCount-1))

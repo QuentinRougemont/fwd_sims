@@ -4,6 +4,16 @@
 
 simple pipeline to perform forward simulation and test for admixture between population
 
+this pipeline was original used to test for:  
+* the dilution effect following admixture of a small pop into a large pop.
+* dilution + selective effect due to fitness differences between the pop.
+The results were published [here](https://onlinelibrary.wiley.com/doi/full/10.1111/eva.12765)
+
+other simple modifications include: 
+* computation of Fst/admixture/Heterozygotie under 4pop linear stepping stone models
+* compputation of Fst/admixture/Het under under more complex models
+
+
 ## Dependencies:
 
 **Slim** [forward simulator](https://messerlab.org/slim/)

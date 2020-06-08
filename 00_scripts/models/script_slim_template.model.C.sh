@@ -17,10 +17,18 @@ initialize() {
     subpopCount = 4;
     for (i in 1:subpopCount)
        sim.addSubpop(i, 500);
-    for (i in 2:subpopCount)
-       sim.subpopulations[i-1].setMigrationRates(i-1, 0.01);
-    for (i in 1:(subpopCount-1))
-        sim.subpopulations[i-1].setMigrationRates(i+1, 0.01);
+    //simulate stepping stone 1D with a reduced migration rate due to a barriers to gene flow for instance
+    p1.setMigrationRates(p2, 0.01);
+    p2.setMigrationRates(p1, 0.01);
+    p2.setMigrationRates(p3, 0.001);
+    p3.setMigrationRates(p2, 0.001);
+    p3.setMigrationRates(p4, 0.01);
+    p4.setMigrationRates(p3, 0.01);       
+
+    //for (i in 2:subpopCount)
+    //   sim.subpopulations[i-1].setMigrationRates(i-1, 0.1);
+    //for (i in 1:(subpopCount-1))
+    //    sim.subpopulations[i-1].setMigrationRates(i+1, 0.1);
 }
 // extract the appropriate number of samples by pop and output vcf file
 //we let the pop evolved for 50 000 generation again rescaled by 20
