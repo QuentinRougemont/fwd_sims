@@ -17,6 +17,7 @@ then
     exit    
 fi
 
+echo $maf
 #prepare indivduals list
 awk '{print $1}' 01_info_file/strata.txt \
     >01_info_file/individuals.list.txt
@@ -33,10 +34,10 @@ done
 #launch loop
 for i in $(eval echo "{1..$ITERATION}")
 do
-    toEval="cat 00_scripts/02.slim4_fst_admixture.general.sh |\
+    toEval="cat 00_scripts/02.slim3_fst.general.sh  | \
         sed 's/__IDX__/$i/g' | \
         sed 's/__mod__/$model/g' |\
-        sed 's/__MAF__/$maf/g' "
+	sed 's/__MAF__/$maf/g' "
     eval $toEval  > TOTAL_"$model"_"$i".sh
 done
 #launch scripts
