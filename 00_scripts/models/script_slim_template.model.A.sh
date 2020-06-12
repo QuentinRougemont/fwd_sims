@@ -14,8 +14,11 @@ initialize() {
 
 // create a population of 10 000 individuals // rescaled by 20 //time are all rescale by 20
 1 {
+	sim.addSubpop("p1", 500);
+}
+1250 {
     subpopCount = 4;
-    for (i in 1:subpopCount)
+    for (i in 2:subpopCount)
        sim.addSubpop(i, 500);
     for (i in 2:subpopCount)
        sim.subpopulations[i-1].setMigrationRates(i-1, 0.01);

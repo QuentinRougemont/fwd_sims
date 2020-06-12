@@ -14,8 +14,11 @@ initialize() {
 
 // create a population of 10 000 individuals // rescaled by 20 //time are all rescale by 20
 1 {
+	sim.addSubpop("p1", 500);
+}
+1250 {
     subpopCount = 4;
-    for (i in 1:subpopCount)
+    for (i in 2:subpopCount)
        sim.addSubpop(i, 500);
     //simulate stepping stone 1D with a reduced migration rate due to a barriers to gene flow for instance
     p1.setMigrationRates(p2, 0.01);

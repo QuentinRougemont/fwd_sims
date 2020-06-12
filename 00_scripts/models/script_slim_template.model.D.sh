@@ -14,6 +14,9 @@ initialize() {
 
 // create a population of 50 000 individuals // rescaled by 20 //time are all rescale by 20
 1 {
+        sim.addSubpop("p1", 500);
+}
+6250 {
     subpopCount = 4;
     for (i in 1:subpopCount)
        sim.addSubpop(i, 2500);
