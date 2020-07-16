@@ -77,3 +77,6 @@ make install
 ## References:
 
 Haller, B.C., & Messer, P.W. (2017). SLiM 2: Flexible, interactive forward genetic simulations. Molecular Biology and Evolution 34(1), 230–240. [DOI](http://dx.doi.org/10.1093/molbev/msw211)
+
+
+Rougemont, Q, Carrier, A, Le Luyer, J, et al. Combining population genomics and forward simulations to investigate stocking impacts: A case study of Muskellunge (Esox masquinongy ) from the St. Lawrence River basin. Evol Appl. 2019; 12: 902– 922. https://doi.org/10.1111/eva.12765 
